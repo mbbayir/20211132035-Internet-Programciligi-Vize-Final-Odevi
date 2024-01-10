@@ -1,0 +1,49 @@
+﻿
+@{
+    ViewData["Title"] = "ArabaEkle";
+    Layout = "~/Views/Shared/_LayoutAdminLTE.cshtml";
+}
+@model ArabalarModel
+@* <div class="row" style="margin-top:3%">
+    <div class="col-md-12"> *@
+        <form asp-action="ArabaEkle" asp-controller="Arabalar" enctype="multipart/form-data">
+            <div>
+                <label asp-for="Title"></label>
+                <input class="form-control form-control-lg" asp-for="Title" atype="text" placeholder="Ev Başlığını Giriniz" aria-label=".form-control-lg example">
+                <span asp-validation-for="Title"></span>
+            </div>
+
+            <div>
+                <label asp-for="Description"></label>
+                <textarea rows="15" class="form-control" asp-for="Description" aria-label="Ev Açıklamasını Giriniz"></textarea>
+                <span asp-validation-for="Description" aria-label="Ev Açıklamasını Giriniz"></span>
+            </div>
+
+            
+
+            <div>
+                <label asp-for="Resimss"></label>
+                <input class="form-control form-control-lg" asp-for="Resimss" atype="text" aria-label=".form-control-lg example">
+                <span asp-validation-for="Resimss"></span>
+            </div>
+            
+            <div>
+                <label asp-for="Marka"></label>
+                <input class="form-control form-control-lg" asp-for="Marka" atype="text" placeholder="Satıcı Telefon Numarasını" aria-label=".form-control-lg example">
+                <span asp-validation-for="Marka"></span>
+            </div>
+            <div>
+                <label asp-for="Model"></label>
+                <input class="form-control form-control-lg" asp-for="Model" atype="text" placeholder="Ev Adresini Giriniz" aria-label=".form-control-lg example">
+                <span asp-validation-for="Model"></span>
+            </div>
+            <br />
+            
+            <br />
+
+            <button type="submit" asp-action="ArabaEkle" asp-controller="Arabalar" class="btn btn-success">Ekle </button>
+
+        </form>
+  @*   </div>
+
+</div> *@

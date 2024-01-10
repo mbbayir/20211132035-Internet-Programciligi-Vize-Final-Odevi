@@ -1,0 +1,58 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_LayoutAdminLTE.cshtml";
+}
+
+@model List<ArabalarModel>
+<div class="row d-flex justify-content-end">
+    <div class="col-md-12">
+        <a class="btn btn-primary" asp-action="ArabaEkle" asp-controller="Arabalar">Yeni Araba Ekle</a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card mb-4" style="margin-top:20px;">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-border" id="tbaraba">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Title</th>
+                                <th>Marka</th>
+                                <th>Model</th>
+                                <th>İslemler</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                int i=0;
+                            }
+                            @foreach(var x in Model)
+                            {
+                                <tr>
+                                    <td> @i </td>
+                                    <td>@x.Title</td>
+                                    <td>@x.Marka</td>
+                                    <td>@x.Model</td>
+                                    
+                                    <td>
+                                        <a href="@x.ArabaId" class="btn btn-primary">Düzenle</a>
+                                        <a href="@x.ArabaId" class="btn btn-danger">Sil</a>      
+                                        <a href ="@x.ArabaId" class="btn btn-success" id="ekle">AracEkle</a>
+                                     </td>
+                                </tr>
+                                  
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

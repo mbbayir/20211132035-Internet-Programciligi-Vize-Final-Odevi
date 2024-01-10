@@ -1,0 +1,222 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_LayoutAdminLTE.cshtml";
+}
+
+<div class="row">
+
+    <div class="col-md-12">
+        <div class="card mb-4" style="margin-top:20px;">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-border" id="tbaraba">
+                        <thead>
+                            <tr>
+                                <th>#.No</th>
+                                <th>Title </th>
+                                <th>Status</th>
+                                <th>Açıklama</th>
+                                <th>Sinif</th>
+                                <th>İslemler</th>
+                            </tr>
+
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card mb-4" style="margin-top:20px;">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <form>
+                        <input type="hidden" name="id" id="id" />
+
+                        <label>Araç Marka</label>
+                        <input type="text" class="form-control" name="title" id="title" /><br />
+
+                        <button class="btn btn-success" id="guncelle">Güncelleme Yap</button>
+                        <button class="btn btn-danger" id="sil">Sil </button>
+
+                        <button class="btn btn-info" id="ekle">Yeni Marka Ekle</button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        $(document).ready(function () {
+
+            function load() {
+                $("#tbaraba tbody").empty();
+                $.ajax({
+                    url: "/Kategori/KategoriListAjax",
+                    type: "Get",
+                    data: {},
+                    success: function (data) {
+                        var i = 1;
+                        $.each(data, function (index, item) {
+                            var tr = $('<tr id="' + item.id + '"></tr>');
+                            tr.append('<td>' + i + '</td>');
+                            tr.append('<td>' + item.title + '</td>');
+                            tr.append('<td>' + item.status + '</td>');
+                            tr.append('<td>' + item.aciklama + '</td>');
+                            tr.append('<td>' + item.sinif + '</td>');
+
+                            var btnGuncelle = $('<button type="button" id="duzenleButton" class="btn btn-secondary">Düzenle</button>');
+                            btnGuncelle.click(function () {
+                                btnGuncelleClick(item.id, item.title);
+                            });
+                            var td = $('<td></td>');
+                            td.append(btnGuncelle);
+                            tr.append(td);
+
+                            $("#tbaraba tbody").append(tr);
+                            i++;
+                        });
+                    }
+
+
+                });
+
+            }
+            function btnGuncelleClick(id, title) {
+                $("#id").val(id);
+                $("#title").val(title);
+            }
+
+            $("#guncelle").click(function () {
+                event.preventDefault();
+
+                var id = $("#id").val();
+                var title = $("#title").val();
+
+                if (title.trim() === "") {
+
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Hata!',
+                        text: 'Düzenleye Tıklayınız Öyle Yapınız.',
+                    });
+                    return;
+                }
+                if (id.trim() === "") {
+
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Hata!',
+                        text: 'Yanlış Güncelleme Yap Buttonuna Bastınız.',
+                    });
+                    return;
+                }
+                $.ajax({
+                    url: "/Kategori/KategoriEditAjax",
+                    type: "POST",
+                    data: { id: id, title: title },
+                    success: function (response) {
+                        console.log(response);
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Başarılı!',
+                            text: 'Veri güncelleme işlemi başarıyla tamamlandı.',
+                        });
+                        $("#id").val("");
+                        $("#title").val("");
+                        load();
+                    },
+                    error: function () {
+                        console.error("Veri güncelleme işleminde hata oluştu.");
+                    }
+                });
+            })
+            $("#sil").click(function () {
+                event.preventDefault();
+
+                var id = $("#id").val();
+                var title = $("#title").val();
+                if (title.trim() === "") {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Hata!',
+                        text: 'Düzenleye Tıklayınız Öyle Yapınız.',
+                    });
+                    return;
+                }
+              
+                $.ajax({
+                    url: "/Kategori/KategoriRemoveAjax",
+                    type: "GET",
+                    data: { Id: id },
+                    success: function (response) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Başarılı!',
+                            text: 'Veri Silme işlemi başarıyla tamamlandı.',
+                        });
+                        $("#id").val("");
+                        $("#title").val("");
+                        load();
+                    },
+                    error: function (e) {
+                        console.error("Veri Silme işleminde hata oluştu.");
+                    }
+                });
+            });
+            $("#ekle").click(function () {
+                event.preventDefault();
+
+                var id = $("#id").val();
+                var title = $("#title").val();
+
+
+                if (title.trim() === "") {
+
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Hata!',
+                        text: 'Araç marka alanı boş olamaz.',
+                    });
+                    return;
+                }
+
+                $.ajax({
+                    url: "/Kategori/KategoriAddAjax",
+                    type: "POST",
+                    data: { id: id, title: title },
+                    success: function (response) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Başarılı!',
+                            text: 'Veri Ekleme işlemi başarıyla tamamlandı.',
+                        });
+                        $("#id").val("");
+                        $("#title").val("");
+                        load();
+                    },
+                    error: function () {
+                        console.error("Veri kaydetme işleminde hata oluştu.");
+                    }
+                });
+            });
+
+
+        })
+
+    </script>
+
+
+
+}

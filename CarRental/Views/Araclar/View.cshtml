@@ -1,0 +1,47 @@
+﻿<!-- Arabalar/Index.cshtml -->
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Arabalar</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+</head>
+<body>
+
+    <h2>Arabalar</h2>
+
+    <button id="getArabalarBtn">Arabaları Getir</button>
+
+    <div id="arabalarContainer"></div>
+
+    <script>
+        $(document).ready(function () {
+            // AJAX çağrısı
+            $("#getArabalarBtn").click(function () {
+                $.ajax({
+                    url: "/Arabalar/GetArabalar",
+                    type: "GET",
+                    dataType: "json",
+                    success: function (data) {
+                        // AJAX başarılı olduğunda burada işlemleri yapabilirsiniz.
+                        // Örneğin, gelen verileri ekrana yazdırabilirsiniz.
+                        var container = $("#arabalarContainer");
+                        container.empty();
+                        $.each(data, function (index, value) {
+                            container.append("<p>" + value + "</p>");
+                        });
+                    },
+                    error: function () {
+                        // Hata durumunda burada işlemleri yapabilirsiniz.
+                        alert("Arabalar getirilirken bir hata oluştu.");
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>

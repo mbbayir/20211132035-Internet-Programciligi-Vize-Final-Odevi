@@ -1,0 +1,31 @@
+﻿
+@{
+    ViewData["Title"] = "GetRoleList";
+    Layout = "~/Views/Shared/_LayoutAdminLTE.cshtml";
+}
+
+
+@model List<AppRole>
+
+<h1 class="mt-5 mb-4">Roller</h1>
+<a asp-action="RoleAdd" class="btn btn-primary mb-3">Role Ekle</a>
+
+<div class="table-responsive">
+    <table class="table table-striped table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th>ID</th>
+                <th>Adı</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Name</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

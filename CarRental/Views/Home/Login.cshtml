@@ -1,0 +1,54 @@
+﻿@{
+    ViewData["Title"] = "Login";
+}
+@model LoginModel
+<div class="row">
+    <div class="col-md-4 offset-md-4">
+        <form asp-action="Login" method="post" class="mx-auto">
+            <div class="card">
+                <div class="card-header"><h3 class="text-center">Oturum Aç</h3></div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label asp-for="UserName"></label>
+                        <input asp-for="UserName" class="form-control" />
+                        <span asp-validation-for="UserName" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Password"></label>
+                        <input type="password" asp-for="Password" class="form-control" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                    <label class="form-check-label" for="exampleCheck1">Beni Hatirla</label>
+                </div>
+
+                <div class="d-grid card-footer">
+                    <input type="submit" value="Giriş Yap" class="btn btn-success" />
+                    <p class="mt-2">
+                        Hala kayıt olmadın mı?
+                        <a asp-action="Register" class="btn btn-link">Kayıt Ol <i class="fas fa-arrow-right"></i></a>
+                    </p>
+                </div>
+
+                @if (!User.Identity.IsAuthenticated)
+                {
+                    <a asp-area="" asp-controller="Home" asp-action="GoogleLogin" class="btn btn-light" style="background-color: #4285F4; color: #fff;">
+                        <i class="fab fa-google"></i> Google ile Giriş Yap
+                    </a>
+                }
+                else
+                {
+                    <a asp-area="" asp-controller="Home" asp-action="Logout" class="btn btn-danger">Çıkış Yap</a>
+                }
+
+
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,23 @@
+﻿
+@{
+    ViewData["Title"] = "RoleAdd";
+    Layout = "~/Views/Shared/_LayoutAdminLTE.cshtml";
+}
+
+@model AppRole
+
+<h3 class="mt-5 mb-4">Role Ekle</h3>
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="RoleAdd">
+            <div class="form-group">
+                <label for="roleName">Rol Adı</label>
+                <input type="text" class="form-control" id="roleName" name="Name" placeholder="Rol Adı" required />
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Kaydet</button>
+            </div>
+        </form>
+    </div>
+</div>
+
